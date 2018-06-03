@@ -1,5 +1,6 @@
-var express = require("express");
-var bodyParser = require("body-parser");
+var express = require('express');
+var path = require('path');
+var bodyParser = require('body-parser');
 
 // This is to account for Heroku's assigning random ports for deployment
 var PORT = process.env.PORT || 3306;

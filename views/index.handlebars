@@ -1,0 +1,25 @@
+<h1>Eat da Burger!</h1>
+
+<h2>Type da Burger! Eat da Burger!</h2>
+
+<h1>Add da Burger!</h1>
+  
+<h3>Enter a burger you wish to devour!</h3>
+
+<form action="/" method="POST">
+  <textarea type="text" name="burger"></textarea>
+
+  <button id="new-burger" type="submit">Submit</button>
+</form>
+
+<ul>
+  {{#each burgers}}
+    {{#unless devoured}}
+      <p>{{this.burger_name}}</p>
+      {{> burgers/burger_name }}
+    {{/unless}}
+  {{/each}}
+</ul>
+
+
+
