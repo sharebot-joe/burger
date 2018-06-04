@@ -9,13 +9,13 @@ var burger = {
   },
   // The variable val is a string
   insertOne: function(table, val, cb) {
-    orm.insertOne("burgers", val, function(res) {
+    orm.insertOne(table, val, function(res) {
       cb(res);
     });
   },
   // An example of objColVal would be {name: cheeseburger}. 
   updateOne: function(table, objColVal, condition, cb) {
-    orm.updateOne("burgers", objColVal, condition, function(res) {
+    orm.updateOne(table, objColVal, condition, function(res) {
       cb(res);
     });
   },

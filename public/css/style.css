@@ -1,3 +1,6 @@
 html, body {
-  background-color: lightcyan;
+  background: lightcyan;
+}
+h1, h2, h3{
+  color: red;
 }
