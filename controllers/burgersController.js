@@ -17,11 +17,22 @@ router.get("/index", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-  burger.insertOne("burgers", req.body, function(result) {
-    // Send back the ID of the new quote
+  burger.insertOne("burgers", req.body.burger, function(result) {
+    res.redirect("/index")
+    // res.json({result});
+  });
+
+});
+
+router.post("/delete/:id", function(req, res) {
+  var deleteID = req.params.id
+  burger.updateOne("burgers", {devoured: true}, id = deleteID, function(result) {
+    // res.redirect("/index")
     res.json({result});
   });
+
 });
+
 
 // Export routes for server.js to use.
 module.exports = router;
