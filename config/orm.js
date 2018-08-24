@@ -1,6 +1,6 @@
 // Import MySQL connection.
-// var connection = require("./connection.js");
-var connection = require("../config/connection.js");
+var connection = require("./connection.js");
+// var connection = require("../config/connection.js");
 
 
 // Object for all our SQL statement functions.
@@ -49,5 +49,5 @@ var orm = {
   }
 };
 
-// Export the orm object for the model (cat.js).
+// Export the orm object for the model
 module.exports = orm;
