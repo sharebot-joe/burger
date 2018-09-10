@@ -1,19 +1,39 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
+const express = require('express');
 
-// This is to account for Heroku's assigning random ports for deployment
-// var PORT = process.env.PORT || 8080;
-var PORT = 8080;
-var app = express();
+const app = express();
+const bodyParser = require('body-parser');
+
 const addRequestId = require('express-request-id')();
-
-const logger = require('./logger');
-
 const morgan = require('morgan');
+const logger = require('./logger')
+var path = require('path');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+// Import routes and give the server access to them.
+var routes = require("./controllers/burgersController.js");
+
+// Serve static content for the app from the "public" directory in the application directory.
+// app.use(express.static('public'));
+app.use('/public', express.static(path.resolve(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, '/public')));
+
+app.use(routes);
+// app.use('/', routes)
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 
-var loggerFormat = ':id [:date[web]]" :method :url" :status :responsetime';
+app.get("/health", function (req, res) {
+    console.log('res.status', res.status)
+    res.status(200).send();
+});
 
 app.use(addRequestId);
 
@@ -21,12 +41,15 @@ morgan.token('id', function getId(req) {
     return req.id
 });
 
+var loggerFormat = ':id [:date[web]] ":method :url" :status :response-time';
+
 app.use(morgan(loggerFormat, {
     skip: function (req, res) {
         return res.statusCode < 400
     },
     stream: process.stderr
 }));
+
 app.use(morgan(loggerFormat, {
     skip: function (req, res) {
         return res.statusCode >= 400
@@ -34,16 +57,18 @@ app.use(morgan(loggerFormat, {
     stream: process.stdout
 }));
 
-app.use(function (req, res, next){
+app.use((req, res, next) => {
     var log = logger.loggerInstance.child({
-        id: req.id,
-        body: req.body
+      id: req.id,
+      body: req.body
     }, true)
-    log.info({req: req})
+    log.info({
+      req: req
+    })
     next();
-});
+  });
 
-app.use(function (req, res, next) {
+  app.use(function (req, res, next) {
     function afterResponse() {
         res.removeListener('finish', afterResponse);
         res.removeListener('close', afterResponse);
@@ -58,10 +83,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-// For logging
-app.get("/health", function (req, res) {
-    res.status(200).send();
-});
+
 
 app.post("/stuff", function (req, res) {
 
@@ -72,28 +94,7 @@ app.post("/stuff", function (req, res) {
     res.status(200).send(response);
 });
 
-// Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static(path.join(__dirname, '/public')));
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// parse application/json
-app.use(bodyParser.json());
-
-// Set Handlebars.
-var exphbs = require("express-handlebars");
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
-
-// Import routes and give the server access to them.
-var routes = require("./controllers/burgersController.js");
-
-app.use(routes);
-// app.use('/', routes)
-
-
-app.listen(PORT, function() {
-  console.log("App now listening at localhost:" + PORT);
+app.set('port', process.env.PORT || 8080);
+const server = app.listen(app.get('port'), () => {
+    console.log(`Express running → PORT ${server.address().port}`);
 });

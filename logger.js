@@ -1,4 +1,5 @@
 const bunyan = require('bunyan')
+
 exports.loggerInstance = bunyan.createLogger({
     name: 'transaction-notifier',
     serializers: {

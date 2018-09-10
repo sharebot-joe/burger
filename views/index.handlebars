@@ -1,29 +1,46 @@
-<h1>Eat da Burger!</h1>
-  
-<h3>Enter a burger!</h3>
-
-<form action="/" method="POST">
-  <textarea type="text" name="burger"></textarea>
-
-  <button id="new-burger" type="submit">Submit</button>
-</form>
-
-<ul>
-  {{#each burgers}}
-    {{#unless devoured}}
-    <div class="burger-div" data-id="{{this.id}}" data-devoured="false">>
-      <p>{{this.burger_name}}</p>
-      <button data-id="{{this.id}}" class="devour" type="button" >Devour It!</button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center" id="top-bar">
+      <img src="public/images/burger.png" alt="burger" />
+      <h1> Eat-Da-Burger! </h1>
     </div>
-    {{/unless}}
-  {{/each}}
-</ul>
-  
-<ul>
-  {{#each burgers}}
-    {{#if devoured}}
-      <p>{{this.burger_name}}</p>
-    {{/if}}
-  {{/each}}
-</ul>
+    <div class="col-md-6 text-center" class="task">
+      <div class="row">
+        {{#each burger_data}}
+          {{#unless this.devoured}}
+        <div class="col-md-9 text-center">
+          <pre>{{this.id}}. {{this.burger_name}}
+          </pre>
+              <!-- {{this.Date}} -->
+        </div>
+        <div class="col-md-3 text-center">
+          <form class="devour-form button-size">
+            <input input type="hidden" class="burger_id" type="text" value={{this.id}}><br>
+            <button type="submit" class="devour btn btn-default">Devour it!</button>
+          </form>
+        </div>
+        {{/unless}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-md-6 text-center" class="task">
+        {{#each burger_data}}
+          {{#if this.devoured}}
+            <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly>
+        {{/if}}
+        {{/each}}
+    </div>
+  </div>
+</div>
 
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center enter_section">
+      <form action="/burgers/create" method="POST">
+        <input type="text" class="form-control" name="burger_name" value="" id="enter_text">
+        <button type="submit" class="btn btn-primary" id="text-enter-button">Submit</button>
+      </form>
+      <p>Enter a burger you want to eat Click the "Submit" button.</p>
+    </div>
+  </div>
+</div>
