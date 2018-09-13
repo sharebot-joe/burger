@@ -1,6 +1,40 @@
 html, body {
-  background: lightcyan;
+  background: #FFEA7F;
 }
 h1, h2, h3{
-  color: red;
+  color: #404040;
+}
+h1 {
+  margin-bottom: 2rem;
+}
+.enter_section {
+  margin-bottom: 2rem;
+}
+.enter_section button {
+  margin: 1.5rem 0;
+}
+.devoured {
+   margin: 1rem 0;
+}
+.devoured .form-control {
+  display: inline-block;
+  height: 2.5rem;
+}
+
+.close-icon {
+  position: absolute;
+  right: 15px;
+  width: 24px;
+}
+
+.data-row {
+  margin: 1.5rem 0;
+}
+.data-row span {
+  font-size: 1.2rem;
+}
+.data-row .col-md-9 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

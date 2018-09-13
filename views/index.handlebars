@@ -2,45 +2,58 @@
   <div class="row">
     <div class="col-md-12 text-center" id="top-bar">
       <img src="public/images/burger.png" alt="burger" />
-      <h1> Eat-Da-Burger! </h1>
+      <h1>EAT DA BURGER!</h1>
     </div>
-    <div class="col-md-6 text-center" class="task">
+
+    <div class="col-md-12 text-center enter_section">
       <div class="row">
+        <div class="col-md-3 mx-auto text-center">
+          <p>Enter a burger and click 'Submit'</p>
+          <form action="/burgers/create" method="POST">
+            <input type="text" class="form-control" name="burger_name" value="" id="enter_text">
+
+            <button type="submit" class="btn btn-primary" id="text-enter-button">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 text-center" class="task">
+
         {{#each burger_data}}
           {{#unless this.devoured}}
+      <div class="row data-row">
         <div class="col-md-9 text-center">
-          <pre>{{this.id}}. {{this.burger_name}}
-          </pre>
+          <span>{{this.id}}. {{this.burger_name}}
+          </span>
               <!-- {{this.Date}} -->
         </div>
         <div class="col-md-3 text-center">
           <form class="devour-form button-size">
-            <input input type="hidden" class="burger_id" type="text" value={{this.id}}><br>
-            <button type="submit" class="devour btn btn-default">Devour it!</button>
+            <input input type="hidden" class="burger_id" type="text" value={{this.id}}>
+            <button type="submit" class="devour btn btn-success">Devour it!</button>
           </form>
         </div>
+      </div>
         {{/unless}}
         {{/each}}
-      </div>
+
     </div>
-    <div class="col-md-6 text-center" class="task">
+    <div class="col-md-1" >
+    </div>
+    <div class="col-md-3 text-center" class="task">
         {{#each burger_data}}
           {{#if this.devoured}}
-            <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly>
+            <div id="{{this.id}}" class="devoured">
+              <img src="public/images/red.png" alt="close" id="{{this.id}}" class="close-icon" z-index="1" />
+              <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly z-index="0">
+            </div>
         {{/if}}
         {{/each}}
+    </div>
+    <div class="col-md-2" >
     </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 text-center enter_section">
-      <form action="/burgers/create" method="POST">
-        <input type="text" class="form-control" name="burger_name" value="" id="enter_text">
-        <button type="submit" class="btn btn-primary" id="text-enter-button">Submit</button>
-      </form>
-      <p>Enter a burger you want to eat Click the "Submit" button.</p>
-    </div>
-  </div>
-</div>
+

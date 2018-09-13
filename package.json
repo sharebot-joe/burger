@@ -23,7 +23,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node db/schema.sql && db/seeds.sql"
   },
   "repository": {
     "type": "git",
