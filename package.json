@@ -16,7 +16,8 @@
     "mysql": "^2.15.0",
     "nodemon": "^1.18.3",
     "npm": "^6.4.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "handlebars-helper-css": "^0.1.0"

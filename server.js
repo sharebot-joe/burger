@@ -7,22 +7,33 @@ const addRequestId = require('express-request-id')();
 const morgan = require('morgan');
 const logger = require('./logger')
 var path = require('path');
+// var favicon = require('serve-favicon');
+
+// Load favicon
+// app.use(favicon(path.join(__dirname,'public','images','favicon.ico')))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
 // Import routes and give the server access to them.
 var routes = require("./controllers/burgersController.js");
+
+
+
 
 // Serve static content for the app from the "public" directory in the application directory.
 // app.use(express.static('public'));
 app.use('/public', express.static(path.resolve(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, '/public')));
 
+
 app.use(routes);
 // app.use('/', routes)
+
+
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
@@ -93,6 +104,8 @@ app.post("/stuff", function (req, res) {
     logger.logResponse(req.id, response, 200);
     res.status(200).send(response);
 });
+
+
 
 app.set('port', process.env.PORT || 8080);
 const server = app.listen(app.get('port'), () => {
